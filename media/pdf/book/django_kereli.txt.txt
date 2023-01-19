@@ -1,0 +1,94 @@
+urls-project fayli
+
+_
+from django.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    
+    path('', include('app.urls'))
+]
+urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+
+
+
+___________________________________________________+_________+_++++++++++_+_+_
+
+
+
+urls.py --app file
+
+
+from app.views import UquvchiViews
+
+urlpatterns = [
+    
+    path('', UquvchiViews.as_view(), name='student'),
+]
+
+
+
+if settings.DEBUG:
+    urlpatterns+=static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+    urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+
+___________________________________________________________
+
+
+
+
+___________________________________________________________-
+
+
+
+
+views.py fayli
+from app.models import Talaba
+from django.views.generic import ListView
+class UquvchiViews(ListView):
+    model = Talaba
+    context_object_name = 'student'
+    template_name = 'blog/index.html'
+
+
+
+_______________________________________________
+
+
+
+
+app -> templates -> blog -> index.html
+
+
+{% load static %}
+
+
+{% block content %}
+{% for i in student %}
+<h1>
+    Ismi: {{i.ism}} <br>
+    Yosh: {{i.yosh}}
+</h1>
+{% endfor %}
+{% endblock content %}
+
+
+
+
+____________________________________________
+
+
+
+settings
+
+
+
+import os
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
